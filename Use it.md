@@ -74,3 +74,23 @@ You have to end your programe with this function so that everything is completel
 ```
 secure()
 ```
+
+
+## Example of a login and signup system
+```python
+import uis
+
+uis.setup("testcdcd")
+mode = input("Do you want to login(1) or signup(2): ")
+if mode == "1":
+    if uis.login(autotask=True) == True:
+        print("Welcome " + uis.getusername())
+    else:
+        print("Access denied")
+else:
+    if uis.signup(autotask=True) == True:
+        print("Account created " + uis.getusername())
+    else:
+        print("Account creation failed")
+uis.secure()
+```

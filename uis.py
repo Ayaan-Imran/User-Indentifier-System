@@ -29,6 +29,7 @@ def signup(username=None, password=None, autotask=False):
         else:
             return False
     else:
+        global username1
         username1 = input("Please make a username: ")
         password1 = input("Please make a password for security: ")
 
