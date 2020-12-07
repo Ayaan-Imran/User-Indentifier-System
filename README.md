@@ -21,6 +21,28 @@ username = input("Please make a username: ")
 password = input("Please make a passward for security: ")
 uis.signup(username, password)
 ```
+if you don't want to make a signup system, you can enable autotask. This will take the username and password byitself and will also check that if the username is already in use; If it is then it will ask for the username again until the user gets a right one! It will return true at the end eventually:
+```python
+if uis.signup(autotask=True):
+    print("Account created")
+```
+
+#### Output:
+```commandline
+>> Please make a username: Test
+>> Please make a password: 1111
+This username is perfect
+Account created
+```
+
+#### Output (If the username is already taken):
+```commandline
+>> Please make a username: Test
+>> Please make a password: 1111
+>> The username you entered is already in use. Please make another one: Test2
+This username is perfect
+Account created
+```
 
 ### login()
 In the login(), you have to pass the user's username and password. It will return true is the user is identified, or else it will return false 

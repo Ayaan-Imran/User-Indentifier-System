@@ -16,17 +16,40 @@ def setup(filename):
     """)
     connection.commit()
 
-def signup(username, password):
-    c.execute("SELECT * FROM account")
-    users = c.fetchall()
-    connection.commit()
+def signup(username=None, password=None, autotask=False):
+    if autotask == False:
+        c.execute("SELECT * FROM account")
+        users = c.fetchall()
+        connection.commit()
 
-    if (username not in users):
-        c.execute("INSERT INTO account VALUES(?,?)", (username, password))
+        if (username not in users):
+            c.execute("INSERT INTO account VALUES(?,?)", (username, password))
+            connection.commit()
+            return True
+        else:
+            return False
+    else:
+        username1 = input("Please make a username: ")
+        password1 = input("Please make a password for security: ")
+
+        c.execute("SELECT * FROM account")
+        users = c.fetchall()
+        connection.commit()
+
+        users = [i[0] for i in users]
+
+        if username1  in users:
+            while True:
+                username1 = input("The username you entered is already in use. Please make another one: ")
+                if username1 not in users:
+                    break
+
+        print("This username is perfect")
+
+        c.execute("INSERT INTO account VALUES(?,?)", (username1, password1))
         connection.commit()
         return True
-    else:
-        return False
+
 
 
 def login(username = None, password = None, autotask = False):
