@@ -1,4 +1,5 @@
 import sqlite3
+
 connection = None
 c = None
 
@@ -28,17 +29,31 @@ def signup(username, password):
         return False
 
 
-def login(username, password):
-    c.execute("SELECT * FROM account")
-    users = c.fetchall()
-    connection.commit()
+def login(username = None, password = None, autotask = False):
+    if not autotask:
+        c.execute("SELECT * FROM account")
+        users = c.fetchall()
+        connection.commit()
 
-    permission = False
-    for i in users:
-        if (i[0] == username) and (i[1] == password):
-            permission = True
-            break
-    return permission
+        permission = False
+        for i in users:
+            if (i[0] == username) and (i[1] == password):
+                permission = True
+                break
+        return permission
+    else:
+        username1 = input("Please enter your username: ")
+        password1 = input("Please enter your password: ")
+        c.execute("SELECT * FROM account")
+        users = c.fetchall()
+        connection.commit()
+
+        permission = False
+        for i in users:
+            if (i[0] == username1) and (i[1] == password1):
+                permission = True
+                break
+        return permission
 
 def secure():
     connection.close()
