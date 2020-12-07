@@ -33,14 +33,14 @@ else:
     print("Access denied")
 ```
 
-if you don't want to manually make a username and password entry, you can enable auto task. Auto task will simply take the input and output byitself and will return true if the login details are matching
+If you don't want to manually make a username and password entry, you can enable auto task. Auto task will simply take the input and output byitself and will return true if the login details are matching
 ```python
 if uis.login(autotask=True) == True:
     print("Hello " + username)
 else:
     print("Access denied")
 ```
-####**Output:**
+#### Output:
 ```commandline
 >> Please enter your username: Ayaan 
 >> Please enter your password: 1111
