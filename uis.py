@@ -42,6 +42,8 @@ def login(username = None, password = None, autotask = False):
                 break
         return permission
     else:
+        global username1
+        global username2
         username1 = input("Please enter your username: ")
         password1 = input("Please enter your password: ")
         c.execute("SELECT * FROM account")
@@ -54,6 +56,9 @@ def login(username = None, password = None, autotask = False):
                 permission = True
                 break
         return permission
+
+def getusername():
+    return username1
 
 def secure():
     connection.close()
