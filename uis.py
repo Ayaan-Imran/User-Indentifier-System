@@ -1,4 +1,5 @@
 import sqlite3
+username1 = "None"
 
 connection = None
 c = None
@@ -39,7 +40,7 @@ def signup(username=None, password=None, autotask=False):
 
         users = [i[0] for i in users]
 
-        if username1  in users:
+        if username1 in users:
             while True:
                 username1 = input("The username you entered is already in use. Please make another one: ")
                 if username1 not in users:
@@ -67,7 +68,6 @@ def login(username = None, password = None, autotask = False):
         return permission
     else:
         global username1
-        global username2
         username1 = input("Please enter your username: ")
         password1 = input("Please enter your password: ")
         c.execute("SELECT * FROM account")
@@ -80,6 +80,29 @@ def login(username = None, password = None, autotask = False):
                 permission = True
                 break
         return permission
+def deleteuser(username = None, password = None, autotask = False):
+    if autotask == False:
+        if login(username, password):
+            c.execute("DELETE FROM account WHERE username = '{}'".format(username))
+            connection.commit()
+            return True
+        else:
+            return False
+    else:
+        username = input("Please enter your username: ")
+        password = input("Please enter your password for confirmation: ")
+        if login(username, password):
+            password = input("Please enter your password again for confirmation: ")
+            if login(username, password):
+                global username1
+                username1 = username
+                c.execute("DELETE FROM account WHERE username = '{}'".format(username))
+                connection.commit()
+                return True
+            else:
+                return False
+        else:
+            return False
 
 def getusername():
     return username1
