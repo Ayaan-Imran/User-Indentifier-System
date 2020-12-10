@@ -69,6 +69,9 @@ else:
 Hello Ayaan
 ```
 
+## detetuser()
+The `delete`
+
 ### secure()
 You have to end your programe with this function so that everything is completely safe and secure
 ```

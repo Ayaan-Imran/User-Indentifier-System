@@ -80,7 +80,7 @@ def login(username = None, password = None, autotask = False):
                 permission = True
                 break
         return permission
-def deleteuser(username = None, password = None, autotask = False):
+def deluser(username = None, password = None, autotask = False):
     if autotask == False:
         if login(username, password):
             c.execute("DELETE FROM account WHERE username = '{}'".format(username))
