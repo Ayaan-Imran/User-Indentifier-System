@@ -115,3 +115,96 @@ class Basic():
     def secure(self):
         global __connection
         __connection.close()
+
+class ExtraPass():
+    __connection = None
+    __c = None
+
+    def __init__(self, filename):
+        self.filename = filename
+        self.username = None
+
+        global __connection
+        global __c
+
+        __connection = sqlite3.connect("{}.db".format(filename))
+        __c = __connection.cursor()
+        __c.execute("""CREATE TABLE IF NOT EXISTS account (
+            username text,
+            password text,
+            extra text
+        )""")
+
+    def login(self, username=None, password=None, extra=None, autotask=False):
+        global __connection
+        global __c
+
+        if autotask == False:
+            __c.execute("SELECT * FROM account")
+            lst = __c.fetchall()
+            __connection.commit()
+
+            if (lst[0] == username) and (lst[1] == password) and (lst[2] == extra):
+                return True
+            else:
+                return False
+        else:
+            username = input("Please enter your username: ")
+            password = input("Please enter your password: ")
+            extra = input("Please enter the extra layer of password you added: ")
+
+            __c.execute("SELECT * FROM account")
+            lst = __c.fetchall()
+            __connection.commit()
+
+            if (lst[0] == username) and (lst[1] == password) and (lst[2] == extra):
+                self.username = username
+                return True
+            else:
+                return False
+
+    def signup(self, username=None, password=None, extra=None, autotask=None):
+        global __connection
+        global __c
+
+        if autotask == False:
+            __c.execute()
+            lst = __c.fetchall()
+            __connection.commit()
+
+            lst = [i[0] for i in lst]
+
+            if username in lst:
+                return False
+            else:
+                __c.execute("INSERT INTO account VALUES ('{}', '{}', '{}')".format(username, password, extra))
+                __connection.commit()
+                return True
+        else:
+            username = input("Please make a username: ")
+            password = input("Please make a password: ")
+            extra = input("Please enter another password that can be different for extra layer of security: ")
+
+            __c.execute()
+            lst = __c.fetchall()
+            __connection.commit()
+
+            lst = [i[0] for i in lst]
+
+            if username in lst:
+                while True:
+                    username = input("The username you entered is already in use. Please enter another one: ")
+
+                    if username not in lst:
+                        break
+                    else:
+                        continue
+            print("This username is perfect!")
+            return True
+
+
+
+
+    def secure(self):
+        global __connection
+        __connection.close
