@@ -8,26 +8,30 @@ import uis
 
 ## Functions 
 ### setup()
-You need to start your project with the setup(). The setup() function takes 1 parameter (the name of a file)
+To start the setup, we need to create an instance of the Basic() class. In the basic class, you need to pass in a filename witch will be storing your user's credentials.
 ```python
-uis.setup("users")
+controller = uis.Basic("users")
 ```
-**Note:** When you will run your programme in which you have your `setup()`, it will create a database file that will be stored in you current working directory
+**Note:** When you will run your programme, it will create a database file that will be stored in you current working directory
 
-### getusername()
-This function will be available when you will use autotask parameter in the below function. This will give the username that the user passed
+### Some details
+1. **controller.username**  
+This will allow you to get the user's name when you will use autotask
+2. **controller.filename**
+This will give you the filename you have given to the database which stores the user's credentials
 
-### signup()
-In the signup(), you have to pass the user's username and password. Then it will store it in the database. The signup() returns true if the prcess went well. You will get false when the username is alreasy taken by some other user
+### controller.signup()
+In the signup(), you have to pass the user's username and password. Then it will store it in the database. The signup() returns true if the process went well. You will get false when the username is already taken by some other user
 ```python
 username = input("Please make a username: ")
 password = input("Please make a passward for security: ")
-uis.signup(username, password)
+if controller.signup(username, password):
+    print("Account created")
 ```
-if you don't want to make a signup system, you can enable autotask. This will take the username and password byitself and will also check that if the username is already in use; If it is then it will ask for the username again until the user gets a right one! It will return true at the end eventually:
+if you don't want to make a signup system, you can enable autotask. This will take the username and password by itself and will also check that if the username is already in use; If it is then it will ask for the username again until the user gets a right one! It will return true at the end eventually:
 ```python
 if uis.signup(autotask=True):
-    print("Account created " + uis.getusername())
+    print("Account created " + controller.username)
 ```
 
 #### Output:
@@ -47,12 +51,12 @@ This username is perfect
 Account created
 ```
 
-### login()
+### controller.login()
 In the login(), you have to pass the user's username and password. It will return true is the user is identified, or else it will return false 
 ```python
 username = input("Please make a username: ")
 password = input("Please make a passward for security: ")
-if uis.login(username, password) == True:
+if controller.login(username, password):
     print("Hello " + username)
 else:
     print("Access denied")
@@ -60,8 +64,8 @@ else:
 
 If you don't want to manually make a username and password entry, you can enable auto task. Auto task will simply take the input and output byitself and will return true if the login details are matching
 ```python
-if uis.login(autotask=True) == True:
-    print("Hello " + uis.getusername())
+if controller.login(autotask=True) == True:
+    print("Hello " + controller.username)
 else:
     print("Access denied")
 ```
@@ -72,13 +76,13 @@ else:
 Hello Ayaan
 ```
 
-### detetuser()
+### controller.deluser()
 The `deluser()` function allows you to delete a user's account. You need to pass in the username and password for confirmation. It will return True if it is deleted and False if it didn't go well.  
 **Note:** Once it is deleted, there is no turning back
 ```python
 username = input("Please enter your username: ")
 password = input("Please enter your password: ")
-if uis.deluser(username, password) == True:
+if controller.deluser(username, password) == True:
     print("Hello " + username)
 else:
     print("Error occured")
@@ -90,8 +94,8 @@ If the `deluser()` returns false:
 
 Like in all the other functions, this has an `autotask`
 ```python
-if uis.deluser(autotask=True):
-    print("Bye " + uis.getusername())
+if controller.deluser(autotask=True):
+    print("Bye " + controller.username)
 else:
     print("Error ocurred")
 ```
@@ -105,9 +109,9 @@ Bye Test
 ```
 
 ### secure()
-You have to end your programe with this function so that everything is completely safe and secure
+You have to end your programme with this function so that everything is completely safe and secure
 ```
-secure()
+controller.secure()
 ```
 
 
@@ -115,25 +119,25 @@ secure()
 ```python
 import uis
 
-uis.setup("user")
+controller = uis.Basic("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
 if mode == "1":
-    if uis.login(autotask=True) == True:
-        print("Welcome " + uis.getusername())
+    if controller.login(autotask=True) == True:
+        print("Welcome " + controller.username)
     else:
         print("Access denied")
 elif mode == "2":
-    if uis.signup(autotask=True) == True:
-        print("Account created " + uis.getusername())
+    if controller.signup(autotask=True) == True:
+        print("Account created " + controller.username)
     else:
         print("Account creation failed")
 else:
     if uis.deluser(autotask=True) == True:
-        print("Account deleted. Bye {}. We were having a good time".format(uis.getusername()))
+        print("Account deleted. Bye {}. We were having a good time".format(controller.username))
     else:
-        print("Error ocurred!")
+        print("Error occurred!")
         
-uis.secure()
+controller.secure()
 ```
 
 #### Output
