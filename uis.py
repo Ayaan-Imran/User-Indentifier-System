@@ -144,10 +144,13 @@ class ExtraPass():
             lst = __c.fetchall()
             __connection.commit()
 
-            if (lst[0] == username) and (lst[1] == password) and (lst[2] == extra):
-                return True
-            else:
-                return False
+            permission = False
+            for i in lst:
+                if (i[0] == username) and (i[1] == password) and (i[2] == extra):
+                    permission = True
+                    break
+
+            return permission
         else:
             username = input("Please enter your username: ")
             password = input("Please enter your password: ")
@@ -157,18 +160,21 @@ class ExtraPass():
             lst = __c.fetchall()
             __connection.commit()
 
-            if (lst[0] == username) and (lst[1] == password) and (lst[2] == extra):
+            permission = False
+            for i in lst:
+                if (i[0] == username) and (i[1] == password) and (i[2] == extra):
+                    permission = True
+                    break
+            if permission:
                 self.username = username
-                return True
-            else:
-                return False
+            return permission
 
-    def signup(self, username=None, password=None, extra=None, autotask=None):
+    def signup(self, username=None, password=None, extra=None, autotask=False):
         global __connection
         global __c
 
         if autotask == False:
-            __c.execute()
+            __c.execute("SELECT * FROM account")
             lst = __c.fetchall()
             __connection.commit()
 
@@ -185,7 +191,7 @@ class ExtraPass():
             password = input("Please make a password: ")
             extra = input("Please enter another password that can be different for extra layer of security: ")
 
-            __c.execute()
+            __c.execute("SELECT * FROM account")
             lst = __c.fetchall()
             __connection.commit()
 
@@ -194,16 +200,45 @@ class ExtraPass():
             if username in lst:
                 while True:
                     username = input("The username you entered is already in use. Please enter another one: ")
-
                     if username not in lst:
                         break
                     else:
                         continue
             print("This username is perfect!")
+
+            __c.execute("INSERT INTO account VALUES ('{}', '{}', '{}')".format(username, password, extra))
+            __connection.commit()
+            self.username = username
             return True
 
 
+    def deluser(self, username=None, password=None, extra=None, autotask=False):
+        global __c
+        global __connection
 
+        test = ExtraPass(self.filename)
+        if autotask == False:
+            if test.login(username, password, extra):
+                __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
+                __connection.commit()
+                return True
+            else:
+                return False
+        else:
+            username = input("Please enter your username: ")
+            password = input("Please enter your password for confirmation: ")
+            extra = input("Please enter the password you gave for extra layer (Password 2): ")
+
+            if test.login(username, password, extra):
+                global username1
+                username1 = username
+                __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
+                __connection.commit()
+
+                self.username = username
+                return True
+            else:
+                return False
 
     def secure(self):
         global __connection

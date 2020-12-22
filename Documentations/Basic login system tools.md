@@ -1,14 +1,15 @@
 # Guide on using uis
-User Identifier System is bassically a tool to help you create a login and signup system!
+User Identifier System is basically a tool to help you create a login and signup system!
 
 ## Import
+
 ```python
 import uis
 ```
 
 ## Functions 
 ### setup()
-To start the setup, we need to create an instance of the Basic() class. In the basic class, you need to pass in a filename witch will be storing your user's credentials.
+To start the setup, we need to create an instance of the Basic() class. In the Basic class, you need to pass in a filename witch will be storing your user's credentials.
 ```python
 controller = uis.Basic("users")
 ```
@@ -16,7 +17,7 @@ controller = uis.Basic("users")
 
 ### Some details
 1. **controller.username**  
-This will allow you to get the user's name when you will use autotask
+This will allow you to get the user's name when you will use autotask feature (Which will be discussed later on)
 2. **controller.filename**
 This will give you the filename you have given to the database which stores the user's credentials
 
@@ -30,7 +31,7 @@ if controller.signup(username, password):
 ```
 if you don't want to make a signup system, you can enable autotask. This will take the username and password by itself and will also check that if the username is already in use; If it is then it will ask for the username again until the user gets a right one! It will return true at the end eventually:
 ```python
-if uis.signup(autotask=True):
+if controller.signup(autotask=True):
     print("Account created " + controller.username)
 ```
 
@@ -116,27 +117,28 @@ controller.secure()
 
 
 ## Example of a login and signup system
+
 ```python
 import uis
 
 controller = uis.Basic("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
 if mode == "1":
-    if controller.login(autotask=True) == True:
+    if controller.login(autotask=True):
         print("Welcome " + controller.username)
     else:
         print("Access denied")
 elif mode == "2":
-    if controller.signup(autotask=True) == True:
+    if controller.signup(autotask=True):
         print("Account created " + controller.username)
     else:
         print("Account creation failed")
 else:
-    if uis.deluser(autotask=True) == True:
+    if controller.deluser(autotask=True):
         print("Account deleted. Bye {}. We were having a good time".format(controller.username))
     else:
         print("Error occurred!")
-        
+
 controller.secure()
 ```
 
