@@ -52,6 +52,7 @@ Account created
 ```commandline
 >> Please make a username: Test
 >> Please make a password: 1111
+>> Please enter another password that can be different for extra layer of security: 2222
 >> The username you entered is already in use. Please make another one: Test2
 This username is perfect
 Account created
@@ -79,18 +80,21 @@ else:
 ```
 #### Output:
 ```commandline
->> Please enter your username: Ayaan 
+>> Please enter your username: Test 
 >> Please enter your password: 1111
-Hello Ayaan
+>> Please enter the extra layer of password you added: 2222
+Hello Test
 ```
 
 ### controller.deluser()
-The `deluser()` function allows you to delete a user's account. You need to pass in the username and password for confirmation. It will return True if it is deleted and False if it didn't go well.  
+The `deluser()` function allows you to delete a user's account. You need to pass in the username, password and extra password for confirmation. It will return True if it is deleted and False if it didn't go well.  
 **Note:** Once it is deleted, there is no turning back
 ```python
 username = input("Please enter your username: ")
 password = input("Please enter your password: ")
-if controller.deluser(username, password) == True:
+extra = input("Please enter your extra password: ")
+
+if controller.deluser(username, password, extra) == True:
     print("Hello " + username)
 else:
     print("Error occured")
@@ -100,7 +104,7 @@ If the `deluser()` returns false:
 2. The account doesn't exist
 3. There was some error in the deletion process (This is rare case)
 
-Like in all the other functions, this has an `autotask`
+Like in all the other functions, this has an **autotask**
 ```python
 if controller.deluser(autotask=True):
     print("Bye " + controller.username)
@@ -113,12 +117,13 @@ else:
 >> Please enter your username: Test
 >> Please enter your password for confirmation: 1111
 >> Please enter your password again for confirmation: 1111
+>> Please enter the password you gave for extra layer (Password "2"): 2222
 Bye Test
 ```
 
 ### secure()
-You have to end your programme with this function so that everything is completely safe and secure
-```
+You have to end your programme with this function so that everything is completely safe and secure!
+```python
 controller.secure()
 ```
 
@@ -128,7 +133,7 @@ controller.secure()
 ```python
 import uis
 
-controller = uis.Basic("user")
+controller = uis.ExtraPass("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
 if mode == "1":
     if controller.login(autotask=True):
@@ -148,29 +153,68 @@ else:
 
 controller.secure()
 ```
+or
+
+```python
+import uis
+
+controller = uis.ExtraPass("user")
+
+mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
+if mode == "1":
+    username = input("Please enter your username: ")
+    password = input("Please enter your password: ")
+    extra_password = input("Please enter your extra password: ")
+
+    if controller.login(username, password, extra_password):
+        print("Hello " + username)
+    else:
+        print("Access denied")
+elif mode == "2":
+    username = input("Please make a username: ")
+    password = input("Please make a password: ")
+    extra_password = input("Please make an extra password: ")
+
+    if controller.signup(username, password, extra_password):
+        print("Welcome " + username)
+    else:
+        print("So error occurred")
+else:
+    username = input("Please enter your username: ")
+    password = input("Please enter your password: ")
+    extra_password = input("Please enter your extra password: ")
+
+    if controller.deluser(username, password, extra_password):
+        print("Bye " + username)
+    else:
+        print("So error occurred")
+
+controller.secure()
+```
 
 #### Output
 Case 1
 ```commandline
->> Do you want to login(1) or signup(2) or delete account(3): 2
 >> Please make a username: uis_learner
->> Please make a password for security: 1111
+>> Please make a password: 1111
+>> Please enter another password that can be different for extra layer of security: 2222
 This username is perfect
-Account created uis_learner
+Account created
 ```
 
 Case 2
 ```commandline
->> Do you want to login(1) or signup(2) or delete account(3): 1
->> Please enter your username: uis_learner
+>> Please enter your username: uis_learner 
 >> Please enter your password: 1111
-Welcome uis_learner
+>> Please enter the extra layer of password you added: 2222
+Hello uis_learner
 ```
 
 Case 3
 ```commandline
->> Do you want to login(1) or signup(2) or delete account(3): 3
 >> Please enter your username: uis_learner
 >> Please enter your password for confirmation: 1111
 >> Please enter your password again for confirmation: 1111
-Account deleted. Bye uis_learner we were having a good time 
+>> Please enter the password you gave for extra layer (Password "2"): 2222
+Bye uis_learner
+```
