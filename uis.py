@@ -1,4 +1,5 @@
 import sqlite3
+import secrets
 
 class Basic():
     __connection = None
@@ -243,3 +244,33 @@ class ExtraPass():
     def secure(self):
         global __connection
         __connection.close
+
+def passgen(len=10, caplock="mix"):
+    letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    symbols = ["@", "#", "%", "!", "*", ">", "<", "$"]
+
+    generartor = secrets.SystemRandom()
+    result = []
+    for i in range(len):
+        a = generartor.choice(letters)
+        if caplock == True:
+            a = a.upper()
+        elif caplock == False:
+            a = a.lower()
+        else:
+            pass
+        result.append(a)
+
+    result.append(generartor.choice(symbols))
+
+    for i in range(4):
+        a = generartor.choice(numbers)
+        result.append(a)
+
+
+    result = [str(i) for i in result]
+
+    return "".join(result)
+
+print(passgen(caplock=False))
