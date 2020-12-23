@@ -18,7 +18,7 @@ User Identifier System is basically a tool to help you create a login and signup
 ## Import
 
 ```python
-import uis
+import User_Identification_System as uis
 ```
 
 ## Functions 
@@ -133,7 +133,7 @@ controller.secure()
 ## Example of a login and signup system
 
 ```python
-import uis
+import User_Identification_System as uis
 
 controller = uis.Basic("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
@@ -187,7 +187,7 @@ Account deleted. Bye uis_learner we were having a good time
 ## Import
 
 ```python
-import uis
+import User_Identification_System as uis
 ```
 
 ## Functions 
@@ -314,7 +314,7 @@ controller.secure()
 ## Example of a login and signup system
 
 ```python
-import uis
+import User_Identification_System as uis
 
 controller = uis.ExtraPass("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
@@ -339,7 +339,7 @@ controller.secure()
 or
 
 ```python
-import uis
+import User_Identification_System as uis
 
 controller = uis.ExtraPass("user")
 
@@ -406,7 +406,7 @@ Bye uis_learner
 ### Importing
 We need to import the uis file
 ```python
-import uis
+import User_Identification_System as uis
 ```
 
 ### Generate random password
