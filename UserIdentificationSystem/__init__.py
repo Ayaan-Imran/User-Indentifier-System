@@ -99,6 +99,7 @@ class Basic():
                 return False
         else:
             username = input("Please enter your username: ")
+            self.username = username
             password = input("Please enter your password for confirmation: ")
             if test.login(username, password):
                 password = input("Please enter your password again for confirmation: ")
@@ -272,5 +273,3 @@ def passgen(len=10, caplock="mix"):
     result = [str(i) for i in result]
 
     return "".join(result)
-
-print(passgen(caplock=False))

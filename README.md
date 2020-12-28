@@ -10,7 +10,7 @@ User Identifier System is a tool you can use to create a cool and easy login and
 My email: **miskiacuberayaan2509@gmail.com**  
 My YouTube channel: **[Ayaan Imran Saleem](https://www.youtube.com/channel/UCbC2N-Q_3pGLJMIiMniCutA)**
 
- Guide on using uis
+# Guide on using uis
 User Identifier System is basically a tool to help you create a login and signup system!
 
 
@@ -18,7 +18,7 @@ User Identifier System is basically a tool to help you create a login and signup
 ## Import
 
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 ```
 
 ## Functions 
@@ -187,7 +187,7 @@ Account deleted. Bye uis_learner we were having a good time
 ## Import
 
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 ```
 
 ## Functions 
@@ -406,7 +406,7 @@ Bye uis_learner
 ### Importing
 We need to import the uis file
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 ```
 
 ### Generate random password
