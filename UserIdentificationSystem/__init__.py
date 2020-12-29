@@ -36,7 +36,6 @@ class Basic():
                 return False
         else:
             username1 = input("Please make a username: ")
-            self.username = username1
             password1 = input("Please make a password for security: ")
 
             __c.execute("SELECT * FROM account")
@@ -55,6 +54,7 @@ class Basic():
 
             __c.execute("INSERT INTO account VALUES(?,?)", (username1, password1))
             __connection.commit()
+            self.username = username1
             return True
 
     def login(self, username=None, password=None, autotask=False):
