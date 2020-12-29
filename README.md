@@ -133,7 +133,7 @@ controller.secure()
 ## Example of a login and signup system
 
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 
 controller = uis.Basic("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
@@ -314,7 +314,7 @@ controller.secure()
 ## Example of a login and signup system
 
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 
 controller = uis.ExtraPass("user")
 mode = input("Do you want to login(1) or signup(2) or delete account(3): ")
@@ -339,7 +339,7 @@ controller.secure()
 or
 
 ```python
-import User_Identification_System as uis
+import UserIdentificationSystem as uis
 
 controller = uis.ExtraPass("user")
 
@@ -402,7 +402,7 @@ Case 3
 Bye uis_learner
 ```
 
-# Usefull functions
+# Useful functions
 ### Importing
 We need to import the uis file
 ```python
