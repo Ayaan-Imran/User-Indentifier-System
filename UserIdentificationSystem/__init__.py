@@ -4,9 +4,11 @@ import secrets
 class Basic():
     __connection = None
     __c = None
+
     def __init__(self, filename):
         self.username = None
         self.filename = filename
+
         global __connection
         global __c
 
@@ -113,6 +115,17 @@ class Basic():
                     return False
             else:
                 return False
+    
+    def usernames(self):
+        global __c
+        global __connection
+
+        __c.execute("SELECT * FROM account")
+        lst = __c.fetchall()
+        __connection.commit()
+
+        lst = [i[0] for i in lst]
+        return lst
 
     def secure(self):
         global __connection
@@ -242,9 +255,20 @@ class ExtraPass():
             else:
                 return False
 
+    def usernames(self):
+        global __c
+        global __connection
+
+        __c.execute("SELECT * FROM account")
+        lst = __c.fetchall()
+        __connection.commit()
+
+        lst = [i[0] for i in lst]
+        return lst
+
     def secure(self):
         global __connection
-        __connection.close
+        __connection.close()
 
 def passgen(len=10, caplock="mix"):
     letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "h", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]

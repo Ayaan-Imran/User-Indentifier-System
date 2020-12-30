@@ -123,6 +123,16 @@ else:
 Bye Test
 ```
 
+### usernames()
+The `username()` function will return a list of usernames who already signup in your system
+```python
+print(controller.usernames())
+```
+**output**
+```commandline
+["test", "test2"]
+```
+
 ### secure()
 You have to end your programme with this function so that everything is completely safe and secure
 ```
@@ -302,6 +312,15 @@ else:
 >> Please enter your password again for confirmation: 1111
 >> Please enter the password you gave for extra layer (Password "2"): 2222
 Bye Test
+```
+### usernames()
+The `username()` function will return a list of usernames who already signup in your system
+```python
+print(controller.usernames())
+```
+**output**
+```commandline
+["test", "test2"]
 ```
 
 ### secure()
