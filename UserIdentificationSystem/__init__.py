@@ -1,9 +1,11 @@
 import sqlite3
 import secrets
+from cryptography.fernet import Fernet
 
 class Basic():
     __connection = None
     __c = None
+    __sconn = None
 
     def __init__(self, filename):
         self.username = None
@@ -11,27 +13,37 @@ class Basic():
 
         global __connection
         global __c
+        global __sconn
+        global __sins
 
         __connection = sqlite3.connect("{}.db".format(filename))
         __c = __connection.cursor()
         __c.execute("""CREATE TABLE IF NOT EXISTS account (
             username text,
-            password text
+            password blob
         )
         """)
         __connection.commit()
 
+        __sconn = Fernet.generate_key()
+        __sins = Fernet(__sconn)
+
     def signup(self, username=None, password=None, autotask=False):
         global __c
         global __connection
+        global __sins
+        global __sconn
+
         if autotask == False:
             __c.execute("SELECT * FROM account")
             users = __c.fetchall()
             __connection.commit()
             users = [i[0] for i in users]
 
+            encrypted_password = __sins.encrypt(bytes(password, "utf8"))
+
             if username not in users:
-                __c.execute("INSERT INTO account VALUES(?,?)", (username, password))
+                __c.execute("INSERT INTO account VALUES(?,?)", (username, encrypted_password))
                 __connection.commit()
                 return True
             else:
@@ -39,6 +51,7 @@ class Basic():
         else:
             username1 = input("Please make a username: ")
             password1 = input("Please make a password for security: ")
+            encrypted_password = __sins.encrypt(bytes(password1, "utf8"))
 
             __c.execute("SELECT * FROM account")
             users = __c.fetchall()
@@ -54,7 +67,7 @@ class Basic():
 
             print("This username is perfect")
 
-            __c.execute("INSERT INTO account VALUES(?,?)", (username1, password1))
+            __c.execute("INSERT INTO account VALUES(?,?)", (username1, encrypted_password))
             __connection.commit()
             self.username = username1
             return True
@@ -62,35 +75,52 @@ class Basic():
     def login(self, username=None, password=None, autotask=False):
         global __c
         global __connection
+        global __sconn
+        global __sins
+
         if not autotask:
             __c.execute("SELECT * FROM account")
             users = __c.fetchall()
             __connection.commit()
 
+            decrypted_password = None
+
             permission = False
             for i in users:
-                if (i[0] == username) and (i[1] == password):
+                decrypted_password = __sins.decrypt(i[1])
+                if (i[0] == username) and (decrypted_password == password):
                     permission = True
                     break
+
+            del decrypted_password
             return permission
         else:
             username1 = input("Please enter your username: ")
             self.username = username1
+
             password1 = input("Please enter your password: ")
+
             __c.execute("SELECT * FROM account")
             users = __c.fetchall()
             __connection.commit()
 
+            decrypted_password = None
             permission = False
             for i in users:
-                if (i[0] == username1) and (i[1] == password1):
+                decrypted_password = __sins.decrypt(i[1])
+                if (i[0] == username1) and (decrypted_password == password1):
                     permission = True
                     break
+
+            del decrypted_password
             return permission
 
     def deluser(self, username=None, password=None, autotask=False):
         global __c
         global __connection
+        global __sins
+        global __sconn
+
         test = Basic(self.filename)
         if autotask == False:
             if test.login(username, password):
@@ -102,12 +132,12 @@ class Basic():
         else:
             username = input("Please enter your username: ")
             self.username = username
+
             password = input("Please enter your password for confirmation: ")
+
             if test.login(username, password):
                 password = input("Please enter your password again for confirmation: ")
                 if test.login(username, password):
-                    global username1
-                    username1 = username
                     __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
                     __connection.commit()
                     return True
