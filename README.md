@@ -133,6 +133,18 @@ print(controller.usernames())
 ["test", "test2"]
 ```
 
+## username_exists()
+This is a helpful function when for some reason you want to check if a username exists and is not in use by someone else.  
+You have to pass in a usename that you want to check. It will return `True ` if the username exists and `False` if the username is valid and is not in use:
+
+```python
+print(controller.username_exists("Test"))
+```
+#### output:
+```console
+True
+```
+
 ### secure()
 You have to end your programme with this function so that everything is completely safe and secure
 ```
@@ -321,6 +333,18 @@ print(controller.usernames())
 **output**
 ```commandline
 ["test", "test2"]
+```
+
+## username_exists()
+This is a helpful function when for some reason you want to check if a username exists and is not in use by someone else.  
+You have to pass in a usename that you want to check. It will return `True ` if the username exists and `False` if the username is valid and is not in use:
+
+```python
+print(controller.username_exists("Test"))
+```
+#### output:
+```console
+True
 ```
 
 ### secure()

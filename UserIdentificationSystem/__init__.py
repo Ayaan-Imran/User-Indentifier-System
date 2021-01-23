@@ -1,7 +1,5 @@
 import sqlite3
 import secrets
-from cryptography.fernet import Fernet
-
 class Basic():
     __connection = None
     __c = None
@@ -134,6 +132,20 @@ class Basic():
 
         lst = [i[0] for i in lst]
         return lst
+
+    def username_exists(self, username):
+        global __c
+        global __connection
+
+        __c.execute("SELECT username FROM account")
+        lst = __c.fetchall()
+        __connection.commit()
+        lst = [i[0] for i in lst]
+        
+        if username in lst:
+            return True
+        else:
+            return False
 
     def secure(self):
         global __connection
@@ -273,6 +285,20 @@ class ExtraPass():
 
         lst = [i[0] for i in lst]
         return lst
+
+    def username_exists(self, username):
+        global __connection
+        global __c
+
+        __c.execute("SELECT username FROM account")
+        lst = __c.fetchall()
+        __connection.commit()
+        lst = [i[0] for i in lst]
+       
+        if username in lst:
+            return True
+        else:
+            return False
 
     def secure(self):
         global __connection
