@@ -133,7 +133,7 @@ print(controller.usernames())
 ["test", "test2"]
 ```
 
-## username_exists()
+### username_exists()
 This is a helpful function when for some reason you want to check if a username exists and is not in use by someone else.  
 You have to pass in a usename that you want to check. It will return `True ` if the username exists and `False` if the username is valid and is not in use:
 
@@ -335,7 +335,7 @@ print(controller.usernames())
 ["test", "test2"]
 ```
 
-## username_exists()
+### username_exists()
 This is a helpful function when for some reason you want to check if a username exists and is not in use by someone else.  
 You have to pass in a usename that you want to check. It will return `True ` if the username exists and `False` if the username is valid and is not in use:
 
@@ -490,3 +490,16 @@ password = uis.passgen(caplock=False) # You do this for making everything lowerc
 ```commandline
 fjztungvje$9320
 ```
+
+### Encryting strings
+This feature will allow you to encrypt strings. Use the `uis.encrypt()` funtion, You have to pass in the string you want to encrypt
+
+```python
+uis.encrypt("Come to my house at 9:00 am")
+```
+**output**
+```commandline
+(ePF"_eP_Fz_:P<'"_9e_vcII_9F
+```
+
+**NOTE**: There is no decryting function as this same encryption is used for protecting your passwords in the database
