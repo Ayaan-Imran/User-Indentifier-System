@@ -141,3 +141,4 @@ cython_debug/
 hack.py
 LICENCE
 setup.py
+test.py
