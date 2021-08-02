@@ -1,7 +1,7 @@
 import sqlite3
 import passtools
 
-__version__ = "0.9.0"
+__version__ = "0.0.9"
 __doc__ = "User Identification System is a package that will allow you to create complex login and registeration system in a simple way"
 
 class Basic():
