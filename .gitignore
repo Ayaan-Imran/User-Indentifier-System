@@ -138,7 +138,6 @@ dmypy.json
 cython_debug/
 
 # My files
-hack.py
 LICENCE
 setup.py
 test.py
