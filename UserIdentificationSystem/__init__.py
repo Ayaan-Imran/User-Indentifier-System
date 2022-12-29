@@ -80,9 +80,9 @@ class Basic():
         # Return the list
         return logdictslist
 
-    def signup(self, username: str = None, password: str = None):
+    def signup(self, username: str, password: str):
         """
-        This function will resigter a new user in the database.
+        This function will register a new user in the database.
         :param username: A unique name the user will be represented by.
         :param password: The authentication key the user has selected.
         :return: True if signup process is successful, False if not (Occurs when the username is already taken by another user).
@@ -94,6 +94,8 @@ class Basic():
             password = passtools.passhash(password, hash_strength=3)
             __c.execute("INSERT INTO account VALUES(?,?)", (username, password))
             __connection.commit()
+
+            self.username = username
 
             # Add log
             if self.log == True:
@@ -118,7 +120,7 @@ class Basic():
         else:
             return False
 
-    def login(self, username: str = None, password: str = None):
+    def login(self, username: str, password: str):
         global __c
         global __connection
 
@@ -137,6 +139,8 @@ class Basic():
                 permission = True
                 break
 
+        self.username = username
+
         # Add log
         if self.log == True:
             # Get number
@@ -154,7 +158,7 @@ class Basic():
                 if number != 0:
                     character = "\n"
 
-                if permission:
+                if permission == True:
                     logline = f"{character}{number},{datetime.datetime.now()},logged in,{username},{databasenum}"
                 else:
                     logline = f"{character}{number},{datetime.datetime.now()},logged in failed,{username},{databasenum}"
@@ -163,7 +167,7 @@ class Basic():
 
         return permission
 
-    def deluser(self, username: str = None, password: str = None):
+    def deluser(self, username: str, password: str):
         global __c
         global __connection
 
@@ -178,6 +182,8 @@ class Basic():
         if test.login(username, password): # No need to hash the password, because the login function already hashed it
             __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
             __connection.commit()
+
+            self.username = username
 
             # Add log
             if self.log == True:
@@ -197,6 +203,8 @@ class Basic():
             return True
 
         else:
+            self.username = username
+
             # Add log
             if self.log == True:
                 # Get number
@@ -205,7 +213,11 @@ class Basic():
 
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
+                    character = ""
+                    if number != 0:
+                        character = "\n"
+
+                    logline = f"{character}{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
                     logfile.write(logline)
 
             return False
@@ -222,19 +234,27 @@ class Basic():
         return lst
 
     def username_is_valid(self, username: str):
+        """
+        This function is to check if a username exists or not
+        :param username: To check if it is valid
+        :return: A boolean depending on if it is valid or not
+        """
         global __c
         global __connection
 
-        lst = self.get_usernames()
-
-        if username in lst:  # If username exists, then that means it is not valid
+        if username in self.get_usernames():  # If username exists, then that means it is not valid
             return False
         else:
             return True  # If username does not exist, then that means username can be used and is valid
 
     def secure(self):
+        """
+        This function is vital to be present at the end of your code to securely close the database connection
+        :return: Returns True if database closed successfully
+        """
         global __connection
         __connection.close()
+        return True
 
 class ExtraPass():
     __connection = None
@@ -269,10 +289,22 @@ class ExtraPass():
         :return: Returns a boolean depending on if the log file has been created.
         """
 
-        with open("log.txt", "w") as logfile:
-            pass
+        if os.path.exists("log.txt") == False:
+            with open("log.txt", "w") as _:
+                return True
+
+        else:
+            return False
 
     def get_log(self):
+        """
+        This function gets all the logs recorded by the system
+        :return: A list with each log appended as one dictionary. Dictionary keys: {num, datetime, action, username, databasenum}
+        """
+
+        if self.log == False:
+            return False
+
         # Open log file and note down the contents
         with open("log.txt", "r") as logfile:
             lines = logfile.readlines() # Get all the log file lines
@@ -281,6 +313,9 @@ class ExtraPass():
             logdictslist = []
             for line in lines:
                 dictionary = {} # Reset dict variable
+
+                line = line.strip("\n")  # Strip the line from new line characters
+                items = line.split(",")  # Get each item in the line
 
                 items = line.split(",") # Get each item in the line
                 dictionary["num"] = int(items[0])
@@ -294,9 +329,13 @@ class ExtraPass():
         # Return the list
         return logdictslist
 
-    def login(self, username: str = None, password: str = None, extra: str = None):
+    def login(self, username: str, password: str, extra: str):
         global __connection
         global __c
+
+        # Check if username does not exist
+        if username not in self.get_usernames():
+            return False
 
         __c.execute("SELECT * FROM account")
         lst = __c.fetchall()
@@ -311,6 +350,8 @@ class ExtraPass():
                 permission = True
                 break
 
+        self.username = username
+
         # Add log
         if self.log == True:
             # Get number
@@ -323,16 +364,27 @@ class ExtraPass():
 
             # Append the log in the logfile
             with open("log.txt", "a") as logfile:
-                if permission:
-                    logline = f"{number},{datetime.datetime.now()},logged in,{username},{databasenum}"
+                character = ""
+                if number != 0:
+                    character = "\n"
+
+                if permission == True:
+                    logline = f"{character}{number},{datetime.datetime.now()},logged in,{username},{databasenum}"
                 else:
-                    logline = f"{number},{datetime.datetime.now()},logged in failed,{username},{databasenum}"
+                    logline = f"{character}{number},{datetime.datetime.now()},logged in failed,{username},{databasenum}"
 
                 logfile.write(logline)
 
         return permission
 
-    def signup(self, username: str = None, password: str = None, extra: str = None):
+    def signup(self, username: str, password: str, extra: str):
+        """
+        This function will resister a new user in the database.
+        :param username: A unique name the user will be represented by.
+        :param password: The authentication key the user has selected.
+        :param extra: The extra authentication key the user has selected
+        :return: True if signup process is successful, False if not (Occurs when the username is already taken by another user).
+        """
         global __connection
         global __c
 
@@ -345,10 +397,7 @@ class ExtraPass():
 
             __c.execute("INSERT INTO account VALUES (?,?,?)", (username, password, extra))
             __connection.commit()
-            return True
 
-            __c.execute("INSERT INTO account VALUES (?,?,?)", (username, password, extra))
-            __connection.commit()
             self.username = username
 
             # Add log
@@ -358,15 +407,16 @@ class ExtraPass():
                     number = len(logfile.readlines())
 
                 # Get database number
-                __c.execute("SELECT username FROM account")
-                usernames = __c.fetchall()
-                __connection.commit()
-
+                usernames = self.get_usernames()
                 databasenum = usernames.index(username) + 1
 
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},signed up,{username},{databasenum}"
+                    character = ""
+                    if number != 0:
+                        character = "\n"
+
+                    logline = f"{character}{number},{datetime.datetime.now()},signed up,{username},{databasenum}"
                     logfile.write(logline)
 
             return True
@@ -375,52 +425,61 @@ class ExtraPass():
         global __c
         global __connection
 
+        # Gets databasenum depending on if the username is valid
+        try:
+            # Get database number
+            databasenum = self.get_usernames().index(username) + 1
+
+        except ValueError:
+            return False
+
         test = ExtraPass(self.filename)
         if test.login(username, password, extra):  # NOTE: No need for encryption before passing because login function already encrypts the important variables.
             __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
             __connection.commit()
 
+            self.username = username
+
             # Add log
             if self.log == True:
                 # Get number
                 with open("log.txt", "r") as logfile:
                     number = len(logfile.readlines())
 
-                # Get database number
-                __c.execute("SELECT username FROM account")
-                usernames = __c.fetchall()
-                __connection.commit()
-
-                databasenum = usernames.index(username) + 1
-
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},deleted,{username},{databasenum}"
+                    character = ""
+                    if number != 0:
+                        character = "\n"
+
+                    logline = f"{character}{number},{datetime.datetime.now()},deleted,{username},{databasenum}"
                     logfile.write(logline)
 
             return True
         else:
+            self.username = username
             # Add log
             if self.log == True:
                 # Get number
                 with open("log.txt", "r") as logfile:
                     number = len(logfile.readlines())
 
-                # Get database number
-                __c.execute("SELECT username FROM account")
-                usernames = __c.fetchall()
-                __connection.commit()
-
-                databasenum = usernames.index(username) + 1
-
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
+                    character = ""
+                    if number != 0:
+                        character = "\n"
+
+                    logline = f"{character}{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
                     logfile.write(logline)
 
             return False
 
     def get_usernames(self):
+        """
+        This function provides user with the registered usernames.
+        :return: A list with all the registered valid usernames
+        """
         global __c
         global __connection
 
@@ -432,16 +491,24 @@ class ExtraPass():
         return lst
 
     def username_is_valid(self, username: str):
+        """
+        This function is to check if a username exists or not
+        :param username: To check if it is valid
+        :return: A boolean depending on if it is valid or not
+        """
         global __connection
         global __c
 
-        lst = self.get_usernames()
-
-        if username in lst:
+        if username in self.get_usernames(): # If username exists, then that means it is not valid
             return False
         else:
-            return True
+            return True  # If username does not exist, then that means username can be used and is valid
 
     def secure(self):
+        """
+            This function is vital to be present at the end of your code to securely close the database connection
+            :return: Returns True if database closed successfully
+            """
         global __connection
         __connection.close()
+        return True
