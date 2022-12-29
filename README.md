@@ -3,7 +3,7 @@ _____________________________
 User Identifier System is a tool you can use to create a cool an easy login and signup system.
 
 ## Version details
-**Current version:** 0.0.9
+**Current version:** 0.0.91
 1. `autotask` feature was removed.
 2. System can now log user's actions and save them in a `log.txt` file.
 3. Contains important bugs and error fixes.
