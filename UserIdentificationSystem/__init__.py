@@ -18,7 +18,7 @@ except ModuleNotFoundError:
 __version__ = "0.0.9"
 __doc__ = "User Identification System is a package that will allow you to create complex login and registration system in a simple way"
 __author__ = "Ayaan Imran"
-__gitgub__ = "https://github.com/Ayaan-Imran/User-Indentifier-System"
+__github__ = "https://github.com/Ayaan-Imran/User-Indentifier-System"
 
 class Basic():
     __connection = None
