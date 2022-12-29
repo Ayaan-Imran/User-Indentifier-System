@@ -141,3 +141,4 @@ cython_debug/
 LICENCE
 setup.py
 test.py
+UserIdentificationSystem/__pycache__/
