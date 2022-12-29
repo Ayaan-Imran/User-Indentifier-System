@@ -1,11 +1,24 @@
 import sqlite3
-import passtools
 import datetime
 import os
+
+try:
+    import passtools
+
+except ModuleNotFoundError:
+    print("\u001b[31m" + "[MODULE NOT FOUND ERROR]" + "\u001b[0m")
+    print()
+    negative = "\u001b[36m" + "[" + "\u001b[0m" + "\u001b[31m" + "!" + "\u001b[0m" + "\u001b[36m" + "]" + "\u001b[0m" + " "
+    neutral = "\u001b[36m" + "[" + "\u001b[0m" + "\u001b[33m" + "-" + "\u001b[0m" + "\u001b[36m" + "]" + "\u001b[0m" + " "
+    print(negative + "Module " + "\u001b[30m" + "pypasstools" + "\u001b[0m" + " is not installed.")
+    print(neutral + "Use the following command to install the missing package:")
+    print("    " + "\u001b[40m" + "\u001b[37m" + "pip install pypasstools" + "\u001b[0m")
+    quit()
 
 __version__ = "0.0.9"
 __doc__ = "User Identification System is a package that will allow you to create complex login and registration system in a simple way"
 __author__ = "Ayaan Imran"
+__gitgub__ = "https://github.com/Ayaan-Imran/User-Indentifier-System"
 
 class Basic():
     __connection = None
