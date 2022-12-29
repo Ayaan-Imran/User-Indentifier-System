@@ -4,7 +4,7 @@ import datetime
 import os
 
 __version__ = "0.0.9"
-__doc__ = "User Identification System is a package that will allow you to create complex login and registeration system in a simple way"
+__doc__ = "User Identification System is a package that will allow you to create complex login and registration system in a simple way"
 __author__ = "Ayaan Imran"
 
 class Basic():
@@ -85,7 +85,7 @@ class Basic():
         This function will resigter a new user in the database.
         :param username: A unique name the user will be represented by.
         :param password: The authentication key the user has selected.
-        :return: True if signup process is successful, False if not (Occurs when the username is already taken by another user.
+        :return: True if signup process is successful, False if not (Occurs when the username is already taken by another user).
         """
         global __c
         global __connection
@@ -205,7 +205,7 @@ class Basic():
 
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},delete proccess failed,{username},{databasenum}"
+                    logline = f"{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
                     logfile.write(logline)
 
             return False
@@ -376,7 +376,7 @@ class ExtraPass():
         global __connection
 
         test = ExtraPass(self.filename)
-        if test.login(username, password, extra):  # NOTE: No need for encryption before passing because login function already encypts the important variables.
+        if test.login(username, password, extra):  # NOTE: No need for encryption before passing because login function already encrypts the important variables.
             __c.execute("DELETE FROM account WHERE username = '{}'".format(username))
             __connection.commit()
 
@@ -415,7 +415,7 @@ class ExtraPass():
 
                 # Append the log in the logfile
                 with open("log.txt", "a") as logfile:
-                    logline = f"{number},{datetime.datetime.now()},delete proccess failed,{username},{databasenum}"
+                    logline = f"{number},{datetime.datetime.now()},delete process failed,{username},{databasenum}"
                     logfile.write(logline)
 
             return False
