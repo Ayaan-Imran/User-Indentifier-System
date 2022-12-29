@@ -15,7 +15,7 @@ except ModuleNotFoundError:
     print("    " + "\u001b[40m" + "\u001b[37m" + "pip install pypasstools" + "\u001b[0m")
     quit()
 
-__version__ = "0.0.9"
+__version__ = "0.0.91"
 __doc__ = "User Identification System is a package that will allow you to create complex login and registration system in a simple way"
 __author__ = "Ayaan Imran"
 __github__ = "https://github.com/Ayaan-Imran/User-Indentifier-System"
