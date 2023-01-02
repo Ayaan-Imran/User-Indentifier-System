@@ -138,7 +138,5 @@ dmypy.json
 cython_debug/
 
 # My files
-LICENCE
-setup.py
 test.py
 UserIdentificationSystem/__pycache__/
