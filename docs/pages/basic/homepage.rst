@@ -112,7 +112,7 @@ The ``signup()`` method allows you to register users into the system.
 **Returns:**
    This method returns a boolean depending on if the process was executed successfully or not.
 
-   If this method return ``False``, it could occur because:
+   If this method returns a ``False``, it could occur because:
 
    #. The username was invalid (It was already in use by another user).
    #. An error occurred with the database (Rare case).
@@ -155,7 +155,7 @@ The ``login()`` method compares the user's credentials with the credentials stor
    controller = Basic("mydatabase.db", log=True) # Log is optional
 
    # If log is set to True...
-   # ...it will automatically log a login statement (both if it failed or if it was successful.
+   # ...it will automatically log a login statement (both if it failed or if it was successful).
    success = controller.login("uis_learner", "password123")
 
 .. _deluser-ref:
