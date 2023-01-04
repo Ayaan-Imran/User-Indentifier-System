@@ -5,7 +5,7 @@ to register, login, and signup using a username and 2 passwords.
 
 This class is called ``ExtraPass()``
 
-Parameters ``Basic()``
+Parameters ``ExtraPass()``
 ----------------------
 +------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
 | Parameter  | Default value       | Description                                                                                                                                                | Data Type  |
@@ -15,7 +15,7 @@ Parameters ``Basic()``
 | log        | False               | If set to True, the system will automatically log user's actions to a "log.txt" file.                                                                      | boolean    |
 +------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+
 
-Methods ``Basic()``
+Methods ``ExtraPass()``
 -------------------
 Simplified version
 ******************
@@ -213,7 +213,7 @@ connection of the databse. If the databse is not closed, it stays open until it 
    # ...can be called here.
    controller.secure()
 
-Class variables ``Basic()``
+Class variables ``ExtraPass()``
 ---------------------------
 Simple overview
 ***************
